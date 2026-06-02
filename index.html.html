@@ -6695,5 +6695,159 @@ window.ELEVE_API_URL = "https://script.google.com/macros/s/AKfycbzRh-Jw7PbN8ZCWM
 })();
 </script>
 
+
+<!-- V103: Ajuste mobile definitivo - prancheta sempre visível e centralizada -->
+<style id="v103-mobile-prancheta-sempre-visivel">
+@media (max-width: 900px){
+  .center{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    width:100%!important;
+    overflow:hidden!important;
+  }
+  .stage-card{
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .stage-toolbar{
+    flex:0 0 auto!important;
+  }
+  .canvas-wrap{
+    position:relative!important;
+    width:100%!important;
+    height:58vh!important;
+    min-height:360px!important;
+    max-height:58vh!important;
+    overflow:hidden!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:10px!important;
+    box-sizing:border-box!important;
+  }
+  .art-viewport{
+    position:relative!important;
+    margin:auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex:0 0 auto!important;
+    overflow:visible!important;
+    transform-origin:center center!important;
+  }
+  #art{
+    position:relative!important;
+    margin:0!important;
+    flex:0 0 auto!important;
+    transform-origin:center center!important;
+  }
+}
+@media (max-width: 520px){
+  .canvas-wrap{
+    height:54vh!important;
+    min-height:330px!important;
+    max-height:54vh!important;
+    padding:8px!important;
+  }
+}
+@media (max-width: 380px){
+  .canvas-wrap{
+    height:50vh!important;
+    min-height:300px!important;
+    max-height:50vh!important;
+  }
+}
+</style>
+
+<script id="v103-mobile-fit-prancheta">
+(function(){
+  function getCanvasSize(){
+    const art = document.getElementById('art');
+    if(!art) return {w:540,h:675};
+    const isStory = art.classList.contains('format-story');
+    return {w:540, h:isStory ? 960 : 675};
+  }
+
+  function fitPranchetaMobile(){
+    try{
+      const wrap = document.querySelector('.canvas-wrap');
+      const viewport = document.querySelector('.art-viewport');
+      const art = document.getElementById('art');
+      if(!wrap || !viewport || !art) return;
+
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      if(!isMobile){
+        if(typeof forceFitToScreen === 'function'){
+          try{ forceFitToScreen(); }catch(e){}
+        }
+        return;
+      }
+
+      const size = getCanvasSize();
+      const availableW = Math.max(100, wrap.clientWidth - 18);
+      const availableH = Math.max(100, wrap.clientHeight - 18);
+      const scale = Math.min(availableW / size.w, availableH / size.h, 1);
+
+      art.style.width = size.w + 'px';
+      art.style.height = size.h + 'px';
+      art.style.minWidth = size.w + 'px';
+      art.style.minHeight = size.h + 'px';
+      art.style.maxWidth = 'none';
+      art.style.maxHeight = 'none';
+      art.style.transformOrigin = 'center center';
+      art.style.transform = 'scale(' + scale + ')';
+
+      viewport.style.width = (size.w * scale) + 'px';
+      viewport.style.height = (size.h * scale) + 'px';
+      viewport.style.display = 'flex';
+      viewport.style.alignItems = 'center';
+      viewport.style.justifyContent = 'center';
+      viewport.style.margin = 'auto';
+      viewport.style.overflow = 'visible';
+    }catch(err){}
+  }
+
+  window.fitPranchetaMobile = fitPranchetaMobile;
+
+  window.addEventListener('load', function(){
+    setTimeout(fitPranchetaMobile, 80);
+    setTimeout(fitPranchetaMobile, 350);
+    setTimeout(fitPranchetaMobile, 900);
+  });
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(fitPranchetaMobile, 80);
+    setTimeout(fitPranchetaMobile, 350);
+    const art = document.getElementById('art');
+    if(art){
+      const observer = new MutationObserver(function(){
+        setTimeout(fitPranchetaMobile, 80);
+      });
+      observer.observe(art, {attributes:true, attributeFilter:['class','style']});
+    }
+  });
+
+  window.addEventListener('resize', function(){
+    setTimeout(fitPranchetaMobile, 80);
+    setTimeout(fitPranchetaMobile, 300);
+  });
+
+  window.addEventListener('orientationchange', function(){
+    setTimeout(fitPranchetaMobile, 150);
+    setTimeout(fitPranchetaMobile, 600);
+  });
+
+  document.addEventListener('click', function(){
+    setTimeout(fitPranchetaMobile, 120);
+  }, true);
+})();
+</script>
+
 </body>
 </html>
