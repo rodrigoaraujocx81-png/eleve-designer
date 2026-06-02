@@ -55,6 +55,12 @@
   .resize-handle.se{width:16px;height:16px;right:-10px;bottom:-10px;cursor:nwse-resize}
   .resize-handle.e{width:12px;height:22px;right:-9px;top:50%;transform:translateY(-50%);cursor:ew-resize}
   .resize-handle.s{width:22px;height:12px;left:50%;bottom:-9px;transform:translateX(-50%);cursor:ns-resize}
+  /* Alças extras: permitem redimensionar também pelo lado esquerdo e superior, no PC e mobile */
+  .resize-handle.w{width:12px;height:22px;left:-9px;top:50%;transform:translateY(-50%);cursor:ew-resize}
+  .resize-handle.n{width:22px;height:12px;left:50%;top:-9px;transform:translateX(-50%);cursor:ns-resize}
+  .resize-handle.sw{width:16px;height:16px;left:-10px;bottom:-10px;cursor:nesw-resize}
+  .resize-handle.nw{width:16px;height:16px;left:-10px;top:-10px;cursor:nwse-resize}
+  .resize-handle.ne{width:16px;height:16px;right:-10px;top:-10px;cursor:nesw-resize}
   
 .color-popover{position:absolute;z-index:40;display:none;background:#fff;color:#0f172a;border:1px solid rgba(15,23,42,.12);border-radius:16px;box-shadow:0 16px 34px rgba(15,23,42,.22);padding:10px;width:178px;user-select:none;animation:popIn .12s ease-out}.color-popover.is-open{display:block}@keyframes popIn{from{opacity:0;transform:translateY(4px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .color-popover strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:#475467}.quick-colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.quick-color{width:22px;height:22px;border-radius:999px;border:2px solid rgba(15,23,42,.12);cursor:pointer;padding:0}.quick-color:hover{transform:scale(1.08);border-color:#1467ff}.custom-color-apply{margin-top:9px;width:100%;border:0;border-radius:10px;padding:10px 10px;background:#1467ff;color:#fff;font-size:12px;font-weight:900;cursor:pointer;position:relative;z-index:3}.custom-color-apply:hover{filter:brightness(.95)}.custom-color-row{display:flex;gap:8px;align-items:center;margin-top:10px;position:relative;z-index:1}.custom-color-row input{width:100%;height:36px;padding:2px;border-radius:9px;cursor:pointer}
@@ -1212,6 +1218,18 @@ body.eleve-theme .stage-layer-btn:hover{
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800;900&family=Lobster&family=Montserrat:wght@400;600;800;900&family=Oswald:wght@400;600;700&family=Poppins:wght@400;600;800;900&family=Playfair+Display:wght@400;700;900&family=Roboto:wght@400;700;900&family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
 
+
+<style id="v70-color-popover-inteligente-mobile">
+/* V70: janela de cor mais inteligente no mobile, sem cobrir controles do objeto */
+.color-popover{z-index:120!important;}
+@media(max-width:900px){
+  .color-popover{width:168px!important;padding:9px!important;border-radius:14px!important;}
+  .quick-colors{grid-template-columns:repeat(6,1fr)!important;gap:5px!important;}
+  .quick-color{width:20px!important;height:20px!important;}
+  .custom-color-apply{padding:9px 8px!important;font-size:11px!important;}
+  .custom-color-row input{height:32px!important;}
+}
+</style>
 </head>
 <body class="eleve-theme app-locked">
   <div class="login-screen" id="loginScreen">
@@ -1254,14 +1272,6 @@ body.eleve-theme .stage-layer-btn:hover{
     <aside class="panel">
       <div class="panel-head"><h2>Conteúdo</h2><p>Campos e imagens principais.</p></div>
       <div class="panel-body">
-        <div class="section-title">Templates</div>
-        <div class="templates-entry">
-          <button class="templates-open-btn" type="button" onclick="openTemplatesModal()">
-            <span><strong>Templates</strong><span>Modelos por segmento</span></span>
-            <span class="tpl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="3" width="7" height="7" rx="2"></rect><rect x="3" y="14" width="7" height="7" rx="2"></rect><rect x="14" y="14" width="7" height="7" rx="2"></rect></svg></span>
-          </button>
-        </div>
-        <div class="divider"></div>
         <label>Texto do selo</label><input id="badgeInput" value="Oferta especial">
         <label>Nome do produto</label><input id="titleInput" value="Produto em destaque">
         <label>Subtítulo</label><textarea id="subtitleInput">Qualidade, preço bom e entrega rápida para você.</textarea>
@@ -1301,6 +1311,15 @@ body.eleve-theme .stage-layer-btn:hover{
               <button class="element-btn" title="Estrela" type="button" data-tags="estrela destaque favorito promocao" onclick="addPresetElement('star')"><span class="el-preview" data-icon="star"></span></button>
             </div>
           </details>
+
+          <div class="divider"></div>
+          <div class="section-title">Templates</div>
+          <div class="templates-entry">
+            <button class="templates-open-btn" type="button" onclick="openTemplatesModal()">
+              <span><strong>Templates</strong><span>Modelos por segmento</span></span>
+              <span class="tpl-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="3" width="7" height="7" rx="2"></rect><rect x="3" y="14" width="7" height="7" rx="2"></rect><rect x="14" y="14" width="7" height="7" rx="2"></rect></svg></span>
+            </button>
+          </div>
         </div>
         
       </div>
@@ -1624,7 +1643,7 @@ function toggleShapes(){pushHistory();shapesVisible=!shapesVisible;document.quer
 function getState(el){return{x:parseFloat(el.dataset.x||0),y:parseFloat(el.dataset.y||0),s:parseFloat(el.dataset.s||1),r:parseFloat(el.dataset.r||0)}}
 function setTransform(el,x,y,s,r){if(!el)return;const old=getState(el);if(r===undefined||r===null)r=old.r||0;el.dataset.x=x;el.dataset.y=y;el.dataset.s=s;el.dataset.r=r;el.style.left=x+'px';el.style.top=y+'px';el.style.transform=`scale(${s}) rotate(${r}deg)`;el.style.transformOrigin='top left'}
 function captureOriginalSizes(){document.querySelectorAll('.item').forEach(el=>{if(!el.dataset.origW){el.dataset.origW=Math.round(el.offsetWidth);el.dataset.origH=Math.round(el.offsetHeight)}})}
-function ensureHandles(el){el.querySelectorAll('.resize-handle').forEach(h=>h.remove());['e','s','se'].forEach(pos=>{const h=document.createElement('span');h.className='resize-handle '+pos;h.dataset.resize=pos;h.addEventListener('pointerdown',startResize);el.appendChild(h)});const rh=document.createElement('span');rh.className='resize-handle rotate';rh.title='Rotacionar';rh.addEventListener('pointerdown',startRotate);el.appendChild(rh)}
+function ensureHandles(el){el.querySelectorAll('.resize-handle').forEach(h=>h.remove());['e','s','se','w','n','sw','nw','ne'].forEach(pos=>{const h=document.createElement('span');h.className='resize-handle '+pos;h.dataset.resize=pos;h.addEventListener('pointerdown',startResize);el.appendChild(h)});const rh=document.createElement('span');rh.className='resize-handle rotate';rh.title='Rotacionar';rh.addEventListener('pointerdown',startRotate);el.appendChild(rh)}
 
 function clearMultiSelection(){
   multiSelected.forEach(el=>el.classList.remove('multi-selected'));
@@ -1843,7 +1862,8 @@ function startResize(e){
   const el=e.currentTarget.closest('.item');
   select(el);
   const textNode=getEditableTextNode(el);
-  resizeDrag={el,handle:e.currentTarget.dataset.resize,startX:e.clientX,startY:e.clientY,w:el.offsetWidth,h:el.offsetHeight,s:getState(el).s,moved:false,textNode,initialFontSize:textNode?(parseFloat(getComputedStyle(textNode).fontSize)||parseFloat(getComputedStyle(el).fontSize)||16):0};
+  const st=getState(el);
+  resizeDrag={el,handle:e.currentTarget.dataset.resize,startX:e.clientX,startY:e.clientY,w:el.offsetWidth,h:el.offsetHeight,x:st.x,y:st.y,s:st.s,r:st.r,moved:false,textNode,initialFontSize:textNode?(parseFloat(getComputedStyle(textNode).fontSize)||parseFloat(getComputedStyle(el).fontSize)||16):0};
   e.currentTarget.setPointerCapture(e.pointerId);
   e.currentTarget.addEventListener('pointermove',resizeMove);
   e.currentTarget.addEventListener('pointerup',stopResize)
@@ -1853,18 +1873,28 @@ function resizeMove(e){
   if(!resizeDrag.moved){pushHistory();resizeDrag.moved=true}
   const dx=(e.clientX-resizeDrag.startX)/(resizeDrag.s*artZoom);
   const dy=(e.clientY-resizeDrag.startY)/(resizeDrag.s*artZoom);
-  let w=resizeDrag.w,h=resizeDrag.h;
-  if(resizeDrag.handle.includes('e')) w=Math.max(20,resizeDrag.w+dx);
-  if(resizeDrag.handle.includes('s')) h=Math.max(20,resizeDrag.h+dy);
+  let w=resizeDrag.w,h=resizeDrag.h,x=resizeDrag.x,y=resizeDrag.y;
+  const minW=20,minH=20;
+  if(resizeDrag.handle.includes('e')) w=Math.max(minW,resizeDrag.w+dx);
+  if(resizeDrag.handle.includes('s')) h=Math.max(minH,resizeDrag.h+dy);
+  if(resizeDrag.handle.includes('w')){
+    w=Math.max(minW,resizeDrag.w-dx);
+    x=resizeDrag.x+(resizeDrag.w-w)*resizeDrag.s;
+  }
+  if(resizeDrag.handle.includes('n')){
+    h=Math.max(minH,resizeDrag.h-dy);
+    y=resizeDrag.y+(resizeDrag.h-h)*resizeDrag.s;
+  }
   resizeDrag.el.style.width=w+'px';
   resizeDrag.el.style.height=h+'px';
+  setTransform(resizeDrag.el,x,y,resizeDrag.s,resizeDrag.r);
   // Para textos, a alça também altera o tamanho da fonte. Assim puxar o texto aumenta/diminui de verdade.
   if(resizeDrag.textNode){
     const rw=w/Math.max(1,resizeDrag.w);
     const rh=h/Math.max(1,resizeDrag.h);
     let factor=1;
-    if(resizeDrag.handle==='e') factor=rw;
-    else if(resizeDrag.handle==='s') factor=rh;
+    if(resizeDrag.handle==='e' || resizeDrag.handle==='w') factor=rw;
+    else if(resizeDrag.handle==='s' || resizeDrag.handle==='n') factor=rh;
     else factor=Math.max(rw,rh);
     const newFs=Math.max(8,Math.min(180,resizeDrag.initialFontSize*factor));
     resizeDrag.textNode.style.fontSize=newFs+'px';
@@ -2466,66 +2496,89 @@ function showColorPopover(el){
   const custom=document.getElementById('customElementColor');
   if(custom)custom.value=getCurrentElementColor(el);
 
-  // Abre a aba de cores longe do objeto selecionado.
-  // Isso evita cobrir texto, alças de redimensionamento e áreas de edição.
+  // V70: posicionamento inteligente da janela de cor no mobile.
+  // O cálculo considera o zoom/transform da prancheta e evita cobrir:
+  // texto selecionado, botão excluir, bolinhas de escala e controles superiores.
   pop.style.display='block';
   pop.classList.add('is-open');
 
   const artRect=art.getBoundingClientRect();
   const r=el.getBoundingClientRect();
-  const gap=58; // distância fixa entre o objeto e a aba flutuante
-  const margin=12;
-  const popW=pop.offsetWidth||190;
-  const popH=pop.offsetHeight||178;
-  const artW=art.clientWidth;
-  const artH=art.clientHeight;
+  const scaleX=artRect.width/(art.clientWidth||540) || 1;
+  const scaleY=artRect.height/(art.clientHeight||675) || 1;
+  const toArtX=v=>v/scaleX;
+  const toArtY=v=>v/scaleY;
 
   const obj={
-    left:r.left-artRect.left,
-    top:r.top-artRect.top,
-    right:r.right-artRect.left,
-    bottom:r.bottom-artRect.top,
-    width:r.width,
-    height:r.height
+    left:toArtX(r.left-artRect.left),
+    top:toArtY(r.top-artRect.top),
+    right:toArtX(r.right-artRect.left),
+    bottom:toArtY(r.bottom-artRect.top),
+    width:toArtX(r.width),
+    height:toArtY(r.height)
   };
 
+  const artW=art.clientWidth||540;
+  const artH=art.clientHeight||675;
+  const margin=18;
+  const gap=42;
+  const popW=pop.offsetWidth||190;
+  const popH=pop.offsetHeight||178;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
-  const overlapsExpandedObject=(x,y)=>{
-    const expanded={left:obj.left-gap/2,top:obj.top-gap/2,right:obj.right+gap/2,bottom:obj.bottom+gap/2};
-    return !(x+popW<expanded.left || x>expanded.right || y+popH<expanded.top || y>expanded.bottom);
-  };
-  const fits=(x,y)=>x>=margin && y>=margin && x+popW<=artW-margin && y+popH<=artH-margin;
+  const safeMaxX=Math.max(margin,artW-popW-margin);
+  const safeMaxY=Math.max(margin,artH-popH-margin);
 
-  const candidates=[
-    // direita, esquerda, acima e abaixo, sempre com distância do objeto
-    {x:obj.right+gap,y:obj.top},
-    {x:obj.left-popW-gap,y:obj.top},
-    {x:obj.left+(obj.width-popW)/2,y:obj.top-popH-gap},
-    {x:obj.left+(obj.width-popW)/2,y:obj.bottom+gap},
-    // cantos seguros da prancheta, caso o objeto seja grande
-    {x:margin,y:margin},
-    {x:artW-popW-margin,y:margin},
-    {x:margin,y:artH-popH-margin},
-    {x:artW-popW-margin,y:artH-popH-margin}
-  ];
+  // Área proibida maior que o objeto: pega alças, label, excluir e controles de topo.
+  const blocked={
+    left:obj.left-42,
+    top:obj.top-76,
+    right:obj.right+52,
+    bottom:obj.bottom+54
+  };
+  const intersects=(x,y,rect=blocked)=>!(x+popW<rect.left || x>rect.right || y+popH<rect.top || y>rect.bottom);
+  const visible=(x,y)=>x>=margin && y>=margin && x+popW<=artW-margin && y+popH<=artH-margin;
+
+  const score=(x,y)=>{
+    const cx=x+popW/2, cy=y+popH/2;
+    const ox=obj.left+obj.width/2, oy=obj.top+obj.height/2;
+    const dist=Math.hypot(cx-ox,cy-oy);
+    let penalty=intersects(x,y)?99999:0;
+    // Em telas pequenas, preferir a região central/inferior esquerda quando houver espaço,
+    // como na marcação amarela enviada pelo usuário.
+    const mobile=window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+    if(mobile){
+      penalty += Math.abs(cx-artW*.34)*0.20;
+      penalty += Math.abs(cy-artH*.48)*0.16;
+    }
+    return penalty-dist;
+  };
+
+  const candidates=[];
+  const add=(x,y)=>candidates.push({x:clamp(x,margin,safeMaxX),y:clamp(y,margin,safeMaxY)});
+
+  // Preferências: abaixo-esquerda/centro, abaixo, acima, esquerda, direita e cantos seguros.
+  add(obj.left-popW*.20, obj.bottom+gap);
+  add(obj.left+(obj.width-popW)/2, obj.bottom+gap);
+  add(obj.left-popW-gap, obj.top+(obj.height-popH)/2);
+  add(obj.right+gap, obj.top+(obj.height-popH)/2);
+  add(obj.left+(obj.width-popW)/2, obj.top-popH-gap);
+  add(artW*.28-popW/2, artH*.50-popH/2);
+  add(margin, artH*.50-popH/2);
+  add(margin, margin);
+  add(artW-popW-margin, margin);
+  add(margin, artH-popH-margin);
+  add(artW-popW-margin, artH-popH-margin);
 
   let chosen=null;
   for(const c of candidates){
-    const x=clamp(c.x,margin,artW-popW-margin);
-    const y=clamp(c.y,margin,artH-popH-margin);
-    if(fits(x,y) && !overlapsExpandedObject(x,y)){chosen={x,y};break;}
+    if(visible(c.x,c.y) && !intersects(c.x,c.y)){chosen=c;break;}
   }
   if(!chosen){
-    // fallback: mantém dentro da arte e prioriza ficar abaixo ou acima do objeto
-    const belowSpace=artH-obj.bottom;
-    const aboveSpace=obj.top;
-    let y=belowSpace>=aboveSpace?obj.bottom+gap:obj.top-popH-gap;
-    let x=obj.left+(obj.width-popW)/2;
-    chosen={x:clamp(x,margin,artW-popW-margin),y:clamp(y,margin,artH-popH-margin)};
+    chosen=candidates.slice().sort((a,b)=>score(a.x,a.y)-score(b.x,b.y))[0] || {x:margin,y:margin};
   }
 
-  pop.style.left=chosen.x+'px';
-  pop.style.top=chosen.y+'px';
+  pop.style.left=Math.round(chosen.x)+'px';
+  pop.style.top=Math.round(chosen.y)+'px';
 }
 function hideColorPopover(){const pop=document.getElementById('colorPopover'); if(pop){pop.classList.remove('is-open');pop.style.display='none';}}
 function closeColorPopoverOnOutsideClick(e){
@@ -7042,5 +7095,1288 @@ window.ELEVE_API_URL = "https://script.google.com/macros/s/AKfycbzRh-Jw7PbN8ZCWM
 })();
 </script>
 
+
+
+<!-- V72: correções solicitadas - fundo transparente real, exportação PNG/JPEG e remoção de formatos duplicados -->
+<style id="v72-export-bg-fixes-css">
+#art.transparent-bg{
+  background:transparent!important;
+  background-image:none!important;
+}
+#art.transparent-bg::before{display:none!important;}
+#art.transparent-bg .shape{display:none!important;}
+.export-format-btn{font-weight:950!important;}
+@media(max-width:900px){
+  .export-format-btn{min-width:82px!important;}
+}
+</style>
+
+<script id="v72-export-bg-fixes-js">
+(function(){
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+  function getArt(){ return document.getElementById('art'); }
+
+  function clearTransparentBg(){
+    var a = getArt();
+    if(!a) return;
+    a.classList.remove('transparent-bg');
+    delete a.dataset.transparentBg;
+    a.querySelectorAll('.shape').forEach(function(shape){
+      if(typeof window.shapesVisible === 'undefined' || window.shapesVisible){ shape.style.display = ''; }
+    });
+  }
+
+  window.makeArtBackgroundTransparent = function(){
+    var a = getArt();
+    if(!a) return;
+    if(typeof window.pushHistory === 'function') window.pushHistory();
+    delete a.dataset.customBg;
+    a.dataset.transparentBg = '1';
+    a.classList.add('transparent-bg');
+    a.style.background = 'transparent';
+    a.style.backgroundImage = 'none';
+    a.style.backgroundSize = '';
+    a.style.backgroundPosition = '';
+    a.style.backgroundRepeat = '';
+    a.querySelectorAll('.shape').forEach(function(shape){ shape.style.display = 'none'; });
+  };
+
+  function wrapFunction(name, before){
+    var old = window[name];
+    if(typeof old !== 'function' || old.__v72Wrapped) return;
+    var wrapped = function(){
+      before();
+      return old.apply(this, arguments);
+    };
+    wrapped.__v72Wrapped = true;
+    window[name] = wrapped;
+  }
+
+  window.downloadArt = function(format){
+    var type = String(format || 'png').toLowerCase();
+    if(type !== 'jpg' && type !== 'jpeg') type = 'png';
+    var mime = type === 'png' ? 'image/png' : 'image/jpeg';
+    var ext = type === 'png' ? 'png' : 'jpg';
+    var bg = type === 'png' ? null : '#ffffff';
+    var a = getArt();
+    if(!a) return;
+
+    if(typeof window.clearSelection === 'function') window.clearSelection();
+    a.classList.add('hide-export');
+    var oldTransform = a.style.transform;
+    a.style.transform = 'none';
+
+    html2canvas(a,{backgroundColor:bg,scale:2,useCORS:true,allowTaint:true}).then(function(canvas){
+      a.style.transform = oldTransform;
+      a.classList.remove('hide-export');
+      var link = document.createElement('a');
+      link.download = 'arte-criada.' + ext;
+      link.href = ext === 'jpg' ? canvas.toDataURL(mime,0.95) : canvas.toDataURL(mime);
+      link.click();
+    }).catch(function(){
+      a.style.transform = oldTransform;
+      a.classList.remove('hide-export');
+      alert('Não foi possível baixar a arte.');
+    });
+  };
+
+  function addExportButtons(){
+    var actions = document.querySelector('.top-actions');
+    if(actions && !document.getElementById('exportPngBtnV72')){
+      var png = document.createElement('button');
+      png.id = 'exportPngBtnV72';
+      png.className = 'btn secondary export-format-btn';
+      png.type = 'button';
+      png.textContent = 'Exportar PNG';
+      png.onclick = function(){ window.downloadArt('png'); };
+
+      var jpg = document.createElement('button');
+      jpg.id = 'exportJpgBtnV72';
+      jpg.className = 'btn secondary export-format-btn';
+      jpg.type = 'button';
+      jpg.textContent = 'Exportar JPEG';
+      jpg.onclick = function(){ window.downloadArt('jpg'); };
+
+      var logout = actions.querySelector('.logout-btn');
+      actions.insertBefore(png, logout || null);
+      actions.insertBefore(jpg, logout || null);
+    }
+
+    var bar = document.getElementById('mobileCanvaTools');
+    if(bar && !document.getElementById('mobileExportJpgV72')){
+      Array.from(bar.querySelectorAll('button')).forEach(function(btn){
+        var txt = (btn.textContent || '').toLowerCase();
+        if(txt.includes('baixar')){
+          btn.setAttribute('onclick', "mobileCallEleve('downloadArt','png')");
+          btn.innerHTML = '<strong>PNG</strong>PNG';
+          btn.classList.add('export-format-btn');
+        }
+      });
+      var jpgBtn = document.createElement('button');
+      jpgBtn.id = 'mobileExportJpgV72';
+      jpgBtn.className = 'mobile-tool-btn export-format-btn';
+      jpgBtn.innerHTML = '<strong>JPG</strong>JPEG';
+      jpgBtn.onclick = function(){ window.downloadArt('jpg'); };
+      bar.appendChild(jpgBtn);
+    }
+  }
+
+  function removeDuplicateFormatButtons(){
+    // Remove Post/Story de painéis mobile duplicados. O controle oficial continua em "Tamanho da arte".
+    document.querySelectorAll('#mobileBgSheetV95 button, #mobileMoreSheetV96 button').forEach(function(btn){
+      var txt = (btn.textContent || '').trim().toLowerCase();
+      if(txt === 'formato post' || txt === 'formato stories' || txt === 'formato story'){
+        btn.remove();
+      }
+    });
+  }
+
+  function patchBackgroundFunctions(){
+    // No painel Plano de fundo, "Remover fundo" agora deixa o fundo transparente de verdade.
+    window.removeCustomBackground = window.makeArtBackgroundTransparent;
+    wrapFunction('applyColors', clearTransparentBg);
+    wrapFunction('randomColors', clearTransparentBg);
+    wrapFunction('loadCustomBackground', clearTransparentBg);
+  }
+
+  ready(function(){
+    patchBackgroundFunctions();
+    addExportButtons();
+    removeDuplicateFormatButtons();
+    setTimeout(addExportButtons, 400);
+    setTimeout(removeDuplicateFormatButtons, 500);
+    setTimeout(addExportButtons, 1200);
+    setTimeout(removeDuplicateFormatButtons, 1300);
+  });
+})();
+</script>
+
+
+<!-- V73: correção do layout quebrado no desktop - esconde painéis mobile fora do celular -->
+<style id="v73-fix-mobile-panels-desktop">
+/* Mantém as ferramentas mobile invisíveis no desktop para não aparecerem cruas na área de trabalho. */
+.mobile-canva-tools,
+.mobile-sheet{
+  display:none!important;
+}
+
+@media(max-width:900px){
+  .mobile-canva-tools{
+    display:flex!important;
+  }
+  .mobile-sheet{
+    display:none!important;
+  }
+  .mobile-sheet.show{
+    display:block!important;
+  }
+}
+
+@media(min-width:901px){
+  body{padding-bottom:0!important;}
+  .workspace{padding-bottom:14px!important;}
+}
+</style>
+<script id="v73-remove-duplicated-mobile-format-buttons">
+(function(){
+  function clean(){
+    document.querySelectorAll('#mobileBgSheetV95 button, #mobileMoreSheetV96 button').forEach(function(btn){
+      var txt=(btn.textContent||'').trim().toLowerCase();
+      if(txt==='post' || txt==='story' || txt==='formato post' || txt==='formato stories' || txt==='formato story'){
+        btn.remove();
+      }
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',clean);
+  else clean();
+  setTimeout(clean,300);
+  setTimeout(clean,1000);
+})();
+</script>
+
+
+
+<!-- V76: correção definitiva isolada - PNG com fundo realmente transparente -->
+<style id="v76-png-alpha-real-css">
+  #art.transparent-bg,
+  #art.export-png-transparent-real{
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+  #art.transparent-bg::before,
+  #art.transparent-bg::after,
+  #art.export-png-transparent-real::before,
+  #art.export-png-transparent-real::after{
+    content: none !important;
+    display: none !important;
+    background: transparent !important;
+  }
+  #art.transparent-bg .shape,
+  #art.export-png-transparent-real .shape{
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+</style>
+<script id="v76-png-alpha-real-js">
+(function(){
+  var transparentExportRequested = false;
+
+  function getArt(){ return document.getElementById('art'); }
+
+  function isTransparentMode(art){
+    return !!(art && (
+      transparentExportRequested ||
+      art.dataset.transparentBg === '1' ||
+      art.classList.contains('transparent-bg') ||
+      (String(art.style.background || '').toLowerCase().indexOf('transparent') >= 0 && String(art.style.backgroundImage || '').toLowerCase() === 'none')
+    ));
+  }
+
+  function ativarFundoTransparente(){
+    var art = getArt();
+    if(!art) return;
+    if(typeof window.pushHistory === 'function') window.pushHistory();
+
+    transparentExportRequested = true;
+    window.__elevePngTransparentMode = true;
+
+    delete art.dataset.customBg;
+    art.dataset.transparentBg = '1';
+    art.classList.add('transparent-bg');
+    art.style.background = 'transparent';
+    art.style.backgroundColor = 'transparent';
+    art.style.backgroundImage = 'none';
+    art.style.backgroundSize = '';
+    art.style.backgroundPosition = '';
+    art.style.backgroundRepeat = '';
+
+    art.querySelectorAll('.shape').forEach(function(shape){
+      shape.style.display = 'none';
+      shape.style.opacity = '0';
+      shape.style.visibility = 'hidden';
+    });
+  }
+
+  window.makeArtBackgroundTransparent = ativarFundoTransparente;
+  window.removeCustomBackground = ativarFundoTransparente;
+
+  function limparPixelsDoFundo(canvas){
+    var ctx = canvas.getContext('2d', { willReadFrequently:true });
+    var w = canvas.width;
+    var h = canvas.height;
+    if(!w || !h) return;
+
+    var img = ctx.getImageData(0,0,w,h);
+    var d = img.data;
+    var total = w*h;
+    var visitado = new Uint8Array(total);
+    var fila = [];
+
+    function id(x,y){ return y*w+x; }
+    function off(i){ return i*4; }
+
+    function foreground(i){
+      var p = off(i);
+      var r = d[p], g = d[p+1], b = d[p+2], a = d[p+3];
+      if(a <= 12) return false;
+
+      // Mantém elementos brancos/claros: textos e cards.
+      if(r >= 218 && g >= 218 && b >= 218) return true;
+      // Mantém azuis fortes usados em textos/preço.
+      if(b >= 145 && r <= 80 && g <= 145) return true;
+      // Mantém cinzas escuros/rodapé e cinzas de texto.
+      if(r <= 95 && g <= 110 && b <= 135) return true;
+      // Mantém cinzas médios de textos e botões, desde que não sejam lilás/azulados do fundo.
+      if(Math.abs(r-g) < 24 && Math.abs(g-b) < 36 && r >= 95 && r <= 210) return true;
+
+      return false;
+    }
+
+    function clearable(i){
+      var p = off(i);
+      var a = d[p+3];
+      if(a <= 12) return true;
+      return !foreground(i);
+    }
+
+    for(var x=0;x<w;x++){
+      fila.push(id(x,0));
+      fila.push(id(x,h-1));
+    }
+    for(var y=0;y<h;y++){
+      fila.push(id(0,y));
+      fila.push(id(w-1,y));
+    }
+
+    while(fila.length){
+      var i = fila.pop();
+      if(i < 0 || i >= total || visitado[i]) continue;
+      visitado[i] = 1;
+      if(!clearable(i)) continue;
+
+      var p = off(i);
+      d[p] = 255; d[p+1] = 255; d[p+2] = 255; d[p+3] = 0;
+
+      var xx = i % w;
+      var yy = (i / w) | 0;
+      if(xx > 0) fila.push(i-1);
+      if(xx < w-1) fila.push(i+1);
+      if(yy > 0) fila.push(i-w);
+      if(yy < h-1) fila.push(i+w);
+    }
+
+    for(var j=0;j<total;j++){
+      var q = off(j);
+      if(d[q+3] <= 12){
+        d[q] = 255; d[q+1] = 255; d[q+2] = 255; d[q+3] = 0;
+      }
+    }
+
+    ctx.putImageData(img,0,0);
+  }
+
+  function baixarCanvas(canvas, ext){
+    var link = document.createElement('a');
+    link.download = 'arte-criada.' + ext;
+    link.href = ext === 'jpg' ? canvas.toDataURL('image/jpeg',0.95) : canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  window.downloadArt = function(format){
+    var type = String(format || 'png').toLowerCase();
+    if(type !== 'jpg' && type !== 'jpeg') type = 'png';
+
+    var art = getArt();
+    if(!art) return;
+
+    var isPng = type === 'png';
+    var transparentMode = isPng && isTransparentMode(art);
+    var ext = isPng ? 'png' : 'jpg';
+
+    if(typeof window.clearSelection === 'function') window.clearSelection();
+
+    var old = {
+      transform: art.style.transform,
+      background: art.style.background,
+      backgroundColor: art.style.backgroundColor,
+      backgroundImage: art.style.backgroundImage,
+      boxShadow: art.style.boxShadow,
+      overflow: art.style.overflow
+    };
+    var shapeState = [];
+
+    art.classList.add('hide-export');
+    art.style.transform = 'none';
+
+    if(transparentMode){
+      art.classList.add('export-png-transparent-real');
+      art.style.background = 'transparent';
+      art.style.backgroundColor = 'transparent';
+      art.style.backgroundImage = 'none';
+      art.style.boxShadow = 'none';
+      art.style.overflow = 'hidden';
+      art.querySelectorAll('.shape').forEach(function(shape, i){
+        shapeState[i] = {display:shape.style.display, opacity:shape.style.opacity, visibility:shape.style.visibility};
+        shape.style.display = 'none';
+        shape.style.opacity = '0';
+        shape.style.visibility = 'hidden';
+      });
+    }
+
+    setTimeout(function(){
+      html2canvas(art,{
+        backgroundColor: isPng ? null : '#ffffff',
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false
+      }).then(function(canvas){
+        if(transparentMode) limparPixelsDoFundo(canvas);
+        restaurar();
+        baixarCanvas(canvas, ext);
+      }).catch(function(){
+        restaurar();
+        alert('Não foi possível baixar a arte.');
+      });
+    }, 80);
+
+    function restaurar(){
+      art.style.transform = old.transform;
+      art.style.background = old.background;
+      art.style.backgroundColor = old.backgroundColor;
+      art.style.backgroundImage = old.backgroundImage;
+      art.style.boxShadow = old.boxShadow;
+      art.style.overflow = old.overflow;
+      art.classList.remove('hide-export');
+      art.classList.remove('export-png-transparent-real');
+      art.querySelectorAll('.shape').forEach(function(shape, i){
+        if(shapeState[i]){
+          shape.style.display = shapeState[i].display;
+          shape.style.opacity = shapeState[i].opacity;
+          shape.style.visibility = shapeState[i].visibility;
+        }
+      });
+    }
+  };
+
+  function limparBotoesDuplicados(){
+    document.querySelectorAll('#mobileBgSheetV95 button, #mobileMoreSheetV96 button').forEach(function(btn){
+      var txt = (btn.textContent || '').trim().toLowerCase();
+      if(txt === 'post' || txt === 'story' || txt === 'formato post' || txt === 'formato stories' || txt === 'formato story') btn.remove();
+    });
+  }
+
+  function iniciar(){
+    limparBotoesDuplicados();
+    setTimeout(limparBotoesDuplicados, 500);
+    setTimeout(limparBotoesDuplicados, 1500);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
+</script>
+
+
+
+<!-- V77: exportação PNG transparente sem resíduos da prancheta/fundo -->
+<style id="v77-png-clean-transparent-css">
+  #art.transparent-bg{
+    background:transparent!important;
+    background-color:transparent!important;
+    background-image:none!important;
+    box-shadow:none!important;
+  }
+  #art.transparent-bg::before,
+  #art.transparent-bg::after{
+    content:none!important;
+    display:none!important;
+    background:transparent!important;
+  }
+  #art.transparent-bg .shape{
+    display:none!important;
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+</style>
+<script id="v77-png-clean-transparent-js">
+(function(){
+  var bgTransparentActive = !!window.__elevePngTransparentMode;
+
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  function getArt(){ return document.getElementById('art'); }
+
+  function markTransparent(){
+    var art = getArt();
+    if(!art) return;
+    bgTransparentActive = true;
+    window.__elevePngTransparentMode = true;
+    if(typeof window.pushHistory === 'function') window.pushHistory();
+
+    delete art.dataset.customBg;
+    art.dataset.transparentBg = '1';
+    art.classList.add('transparent-bg');
+    art.style.background = 'transparent';
+    art.style.backgroundColor = 'transparent';
+    art.style.backgroundImage = 'none';
+    art.style.backgroundSize = '';
+    art.style.backgroundPosition = '';
+    art.style.backgroundRepeat = '';
+    art.style.boxShadow = 'none';
+
+    art.querySelectorAll('.shape').forEach(function(el){
+      el.style.display = 'none';
+      el.style.opacity = '0';
+      el.style.visibility = 'hidden';
+    });
+  }
+
+  function clearTransparentFlag(){
+    var art = getArt();
+    bgTransparentActive = false;
+    window.__elevePngTransparentMode = false;
+    if(art){
+      delete art.dataset.transparentBg;
+      art.classList.remove('transparent-bg');
+    }
+  }
+
+  function isTransparentExport(format){
+    var type = String(format || 'png').toLowerCase();
+    var art = getArt();
+    if(type === 'jpg' || type === 'jpeg') return false;
+    return !!(bgTransparentActive || window.__elevePngTransparentMode || (art && (art.dataset.transparentBg === '1' || art.classList.contains('transparent-bg'))));
+  }
+
+  window.makeArtBackgroundTransparent = markTransparent;
+  window.removeCustomBackground = markTransparent;
+
+  // Quando o usuário troca/aplica outro fundo, o modo transparente é desativado.
+  function wrapAndClear(name){
+    var old = window[name];
+    if(typeof old !== 'function' || old.__v77ClearWrap) return;
+    var fn = function(){
+      clearTransparentFlag();
+      return old.apply(this, arguments);
+    };
+    fn.__v77ClearWrap = true;
+    window[name] = fn;
+  }
+  wrapAndClear('applyColors');
+  wrapAndClear('randomColors');
+  wrapAndClear('loadCustomBackground');
+
+  function prepareCloneForTransparentExport(doc){
+    var cloneArt = doc.getElementById('art');
+    if(!cloneArt) return;
+
+    var style = doc.createElement('style');
+    style.id = 'v77-html2canvas-transparent-overrides';
+    style.textContent = [
+      '#art{background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;}',
+      '#art::before,#art::after{content:none!important;display:none!important;background:transparent!important;opacity:0!important;visibility:hidden!important;}',
+      '#art .shape{display:none!important;opacity:0!important;visibility:hidden!important;}',
+      '#art.hide-export .remove-x,#art.hide-export .mini-controls,#art.hide-export .resize-handle,#art.hide-export .color-popover,#art.hide-export .group-selection-box{display:none!important;}',
+      '#art .item.selected{outline:none!important;box-shadow:none!important;}',
+      '#art .item.selected::after{display:none!important;content:none!important;}'
+    ].join('\n');
+    doc.head.appendChild(style);
+
+    cloneArt.classList.add('hide-export','transparent-bg');
+    cloneArt.style.background = 'transparent';
+    cloneArt.style.backgroundColor = 'transparent';
+    cloneArt.style.backgroundImage = 'none';
+    cloneArt.style.boxShadow = 'none';
+    cloneArt.style.transform = 'none';
+    cloneArt.style.overflow = 'hidden';
+
+    cloneArt.querySelectorAll('.shape').forEach(function(el){ el.remove(); });
+    cloneArt.querySelectorAll('.remove-x,.mini-controls,.resize-handle,.color-popover,.group-selection-box').forEach(function(el){ el.remove(); });
+  }
+
+  function downloadCanvas(canvas, ext){
+    var link = document.createElement('a');
+    link.download = 'arte-criada.' + ext;
+    link.href = ext === 'jpg' ? canvas.toDataURL('image/jpeg',0.95) : canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  window.downloadArt = function(format){
+    var type = String(format || 'png').toLowerCase();
+    if(type !== 'jpg' && type !== 'jpeg') type = 'png';
+
+    var art = getArt();
+    if(!art) return;
+
+    var isJpg = (type === 'jpg' || type === 'jpeg');
+    var ext = isJpg ? 'jpg' : 'png';
+    var transparent = isTransparentExport(type);
+
+    if(typeof window.clearSelection === 'function') window.clearSelection();
+
+    var oldTransform = art.style.transform;
+    art.classList.add('hide-export');
+    art.style.transform = 'none';
+
+    html2canvas(art,{
+      backgroundColor: isJpg ? '#ffffff' : null,
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+      onclone: function(doc){
+        var cloneArt = doc.getElementById('art');
+        if(cloneArt){
+          cloneArt.classList.add('hide-export');
+          cloneArt.style.transform = 'none';
+          if(isJpg){
+            cloneArt.classList.remove('transparent-bg');
+            cloneArt.style.boxShadow = 'none';
+          }
+        }
+        if(transparent) prepareCloneForTransparentExport(doc);
+      }
+    }).then(function(canvas){
+      art.style.transform = oldTransform;
+      art.classList.remove('hide-export');
+      downloadCanvas(canvas, ext);
+    }).catch(function(){
+      art.style.transform = oldTransform;
+      art.classList.remove('hide-export');
+      alert('Não foi possível baixar a arte.');
+    });
+  };
+
+  ready(function(){
+    // Garante que os botões corretos do painel Plano de fundo chamem a função nova.
+    document.querySelectorAll('button[onclick*="removeCustomBackground"]').forEach(function(btn){
+      btn.onclick = function(){ markTransparent(); };
+    });
+    document.querySelectorAll('button[onclick*="makeArtBackgroundTransparent"]').forEach(function(btn){
+      btn.onclick = function(){ markTransparent(); };
+    });
+  });
+})();
+</script>
+
+
+
+<!-- V78: remoção da exportação PNG - mantém somente JPEG, sem alterar demais funções -->
+<style id="v78-remove-png-export-css">
+  #exportPngBtnV72,
+  #mobileCanvaTools button.export-format-btn:not(#mobileExportJpgV72),
+  #mobileCanvaTools button[onclick*="downloadArt','png"],
+  #mobileCanvaTools button[onclick*='downloadArt","png'],
+  #mobileCanvaTools button[onclick*="downloadArt('png"],
+  #mobileCanvaTools button[onclick*='downloadArt("png']{
+    display:none!important;
+  }
+</style>
+<script id="v78-remove-png-export-js">
+(function(){
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  function removePngButtons(){
+    var pngTop = document.getElementById('exportPngBtnV72');
+    if(pngTop) pngTop.remove();
+
+    document.querySelectorAll('button').forEach(function(btn){
+      var txt = (btn.textContent || '').trim().toLowerCase();
+      var html = (btn.innerHTML || '').toLowerCase();
+      var onclickAttr = (btn.getAttribute('onclick') || '').toLowerCase();
+      var id = (btn.id || '').toLowerCase();
+      var isPngButton =
+        id.includes('exportpng') ||
+        onclickAttr.includes('downloadart') && onclickAttr.includes('png') ||
+        txt === 'exportar png' ||
+        txt === 'pngpng' ||
+        txt === 'png' ||
+        html.includes('<strong>png</strong>');
+
+      if(isPngButton){
+        btn.remove();
+      }
+    });
+
+    var jpgTop = document.getElementById('exportJpgBtnV72');
+    if(jpgTop) jpgTop.textContent = 'Exportar JPEG';
+
+    var jpgMobile = document.getElementById('mobileExportJpgV72');
+    if(jpgMobile) jpgMobile.innerHTML = '<strong>JPG</strong>JPEG';
+  }
+
+  function forceJpegOnly(){
+    var oldDownload = window.downloadArt;
+    window.downloadArt = function(format){
+      // PNG removido do projeto: qualquer chamada antiga agora exporta em JPEG.
+      if(typeof oldDownload === 'function') return oldDownload.call(this, 'jpg');
+    };
+
+    var oldMobileCall = window.mobileCallEleve;
+    if(typeof oldMobileCall === 'function'){
+      window.mobileCallEleve = function(fnName){
+        var args = Array.prototype.slice.call(arguments,1);
+        if(fnName === 'downloadArt') args = ['jpg'];
+        return oldMobileCall.apply(this, [fnName].concat(args));
+      };
+    }
+  }
+
+  ready(function(){
+    removePngButtons();
+    forceJpegOnly();
+    setTimeout(removePngButtons, 250);
+    setTimeout(removePngButtons, 900);
+  });
+})();
+</script>
+
+
+
+<!-- V79: limpeza segura - JPEG único e correção de seleção de templates -->
+<style id="v79-clean-jpeg-only-css">
+  /* Garante que qualquer sobra visual de PNG não apareça para o cliente */
+  #exportPngBtnV72,
+  button[onclick*="downloadArt('png"],
+  button[onclick*='downloadArt("png'],
+  button[onclick*="downloadArt','png"],
+  button[onclick*='downloadArt","png'],
+  button[onclick*="downloadArt(\'png"],
+  button[onclick*="downloadArt(\"png"],
+  .export-format-btn[data-format="png"]{
+    display:none!important;
+  }
+</style>
+<script id="v79-clean-jpeg-only-js">
+(function(){
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  function removePngLeftovers(){
+    document.querySelectorAll('button').forEach(function(btn){
+      var txt = (btn.textContent || '').replace(/\s+/g,' ').trim().toLowerCase();
+      var html = (btn.innerHTML || '').toLowerCase();
+      var id = (btn.id || '').toLowerCase();
+      var oc = (btn.getAttribute('onclick') || '').toLowerCase();
+      var isPng = id.indexOf('png') !== -1 ||
+                  (oc.indexOf('downloadart') !== -1 && oc.indexOf('png') !== -1) ||
+                  txt === 'png' || txt === 'exportar png' || txt === 'png png' || txt === 'pngpng' ||
+                  html.indexOf('<strong>png</strong>') !== -1;
+      if(isPng) btn.remove();
+    });
+
+    var jpgTop = document.getElementById('exportJpgBtnV72');
+    if(jpgTop){
+      jpgTop.textContent = 'Exportar JPEG';
+      jpgTop.onclick = function(){ window.downloadArt('jpg'); };
+    }
+    var jpgMobile = document.getElementById('mobileExportJpgV72');
+    if(jpgMobile){
+      jpgMobile.innerHTML = '<strong>JPG</strong>JPEG';
+      jpgMobile.onclick = function(){
+        if(typeof window.mobileCallEleve === 'function') window.mobileCallEleve('downloadArt','jpg');
+        else window.downloadArt('jpg');
+      };
+    }
+  }
+
+  // Corrige templates antigos que ainda chamavam selectTemplateChoice().
+  window.selectTemplateChoice = function(index){
+    var i = Number(index);
+    if(!Number.isFinite(i)) return;
+    window.selectedTemplateChoice = i;
+    try{ selectedTemplateChoice = i; }catch(e){}
+
+    document.querySelectorAll('.template-card').forEach(function(card){
+      card.classList.toggle('selected', Number(card.getAttribute('data-index')) === i);
+    });
+
+    var applyBtn = document.getElementById('applyTemplateBtn');
+    if(applyBtn){
+      applyBtn.disabled = false;
+      applyBtn.onclick = function(){
+        var seg = window.activeTemplateSegment || (typeof activeTemplateSegment !== 'undefined' ? activeTemplateSegment : null);
+        if(!seg) seg = 'comercio';
+        if(typeof window.applySegmentTemplate === 'function') window.applySegmentTemplate(seg, i);
+        else if(typeof applySegmentTemplate === 'function') applySegmentTemplate(seg, i);
+        if(typeof window.closeTemplatesModal === 'function') window.closeTemplatesModal();
+      };
+    }else{
+      var seg = window.activeTemplateSegment || (typeof activeTemplateSegment !== 'undefined' ? activeTemplateSegment : null);
+      if(!seg) seg = 'comercio';
+      if(typeof window.applySegmentTemplate === 'function') window.applySegmentTemplate(seg, i);
+      else if(typeof applySegmentTemplate === 'function') applySegmentTemplate(seg, i);
+      if(typeof window.closeTemplatesModal === 'function') window.closeTemplatesModal();
+    }
+  };
+
+  function forceJpegDownload(){
+    if(window.__v79JpegOnlyApplied) return;
+    window.__v79JpegOnlyApplied = true;
+    var previousDownload = window.downloadArt;
+    window.downloadArt = function(format){
+      if(typeof previousDownload === 'function') return previousDownload.call(this, 'jpg');
+    };
+
+    var previousMobileCall = window.mobileCallEleve;
+    if(typeof previousMobileCall === 'function'){
+      window.mobileCallEleve = function(fnName){
+        var args = Array.prototype.slice.call(arguments, 1);
+        if(fnName === 'downloadArt') args = ['jpg'];
+        return previousMobileCall.apply(this, [fnName].concat(args));
+      };
+    }
+  }
+
+  ready(function(){
+    removePngLeftovers();
+    forceJpegDownload();
+    setTimeout(removePngLeftovers, 250);
+    setTimeout(removePngLeftovers, 1000);
+    setTimeout(removePngLeftovers, 2200);
+  });
+})();
+</script>
+
+
+
+<!-- V80: feedback visual de carregamento ao remover fundo - sem alterar funções existentes -->
+<style id="v80-loader-remover-fundo-css">
+  .eleve-bg-loading-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    background:rgba(0,0,0,.58);
+    backdrop-filter:blur(5px);
+  }
+  .eleve-bg-loading-overlay.show{display:flex!important;}
+  .eleve-bg-loading-card{
+    width:min(360px,92vw);
+    border:1px solid rgba(56,224,32,.35);
+    border-radius:22px;
+    background:linear-gradient(180deg,#071007,#020402);
+    color:#fff;
+    box-shadow:0 28px 80px rgba(0,0,0,.58),0 0 32px rgba(56,224,32,.10);
+    padding:22px 22px 20px;
+    text-align:center;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+  }
+  .eleve-bg-spinner{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:4px solid rgba(56,224,32,.18);
+    border-top-color:#38e020;
+    margin:0 auto 14px;
+    animation:eleveBgSpin .85s linear infinite;
+  }
+  .eleve-bg-loading-title{
+    font-size:17px;
+    font-weight:950;
+    margin:0 0 5px;
+    color:#eaffea;
+  }
+  .eleve-bg-loading-text{
+    font-size:13px;
+    line-height:1.35;
+    margin:0 0 14px;
+    color:rgba(255,255,255,.72);
+  }
+  .eleve-bg-progress{
+    position:relative;
+    height:9px;
+    border-radius:999px;
+    overflow:hidden;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(56,224,32,.20);
+  }
+  .eleve-bg-progress::before{
+    content:"";
+    position:absolute;
+    inset:0 auto 0 0;
+    width:42%;
+    border-radius:999px;
+    background:linear-gradient(90deg,rgba(56,224,32,.18),#38e020,rgba(56,224,32,.18));
+    animation:eleveBgProgress 1.05s ease-in-out infinite;
+  }
+  .eleve-bg-loading-hint{
+    margin-top:10px;
+    font-size:11px;
+    color:rgba(255,255,255,.50);
+  }
+  .stage-remove-bg-btn.eleve-processing,
+  .mobile-tool-btn.eleve-processing,
+  .v95-mobile-btn.eleve-processing{
+    position:relative!important;
+    pointer-events:none!important;
+    opacity:.82!important;
+    overflow:hidden!important;
+  }
+  .stage-remove-bg-btn.eleve-processing::after,
+  .mobile-tool-btn.eleve-processing::after,
+  .v95-mobile-btn.eleve-processing::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    height:3px;
+    width:45%;
+    background:#38e020;
+    animation:eleveBgButtonProgress .9s ease-in-out infinite;
+  }
+  body:not(.eleve-theme) .eleve-bg-loading-card{background:#fff;color:#0f172a;border-color:#1467ff;}
+  body:not(.eleve-theme) .eleve-bg-loading-title{color:#0f172a;}
+  body:not(.eleve-theme) .eleve-bg-loading-text{color:#475467;}
+  body:not(.eleve-theme) .eleve-bg-spinner{border-color:rgba(20,103,255,.16);border-top-color:#1467ff;}
+  body:not(.eleve-theme) .eleve-bg-progress::before{background:linear-gradient(90deg,rgba(20,103,255,.18),#1467ff,rgba(20,103,255,.18));}
+  @keyframes eleveBgSpin{to{transform:rotate(360deg)}}
+  @keyframes eleveBgProgress{0%{left:-45%;}50%{left:55%;}100%{left:105%;}}
+  @keyframes eleveBgButtonProgress{0%{left:-45%;}50%{left:55%;}100%{left:105%;}}
+  @media(max-width:720px){
+    .eleve-bg-loading-card{width:min(330px,94vw);padding:20px 18px;border-radius:20px;}
+    .eleve-bg-spinner{width:42px;height:42px;margin-bottom:12px;}
+    .eleve-bg-loading-title{font-size:16px;}
+    .eleve-bg-loading-text{font-size:12px;}
+  }
+</style>
+<script id="v80-loader-remover-fundo-js">
+(function(){
+  var activeCount = 0;
+  var activeButtons = [];
+  var originalText = new WeakMap();
+
+  function ready(fn){
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  function ensureOverlay(){
+    var overlay = document.getElementById('eleveBgLoadingOverlay');
+    if(overlay) return overlay;
+    overlay = document.createElement('div');
+    overlay.id = 'eleveBgLoadingOverlay';
+    overlay.className = 'eleve-bg-loading-overlay';
+    overlay.setAttribute('aria-live','polite');
+    overlay.innerHTML =
+      '<div class="eleve-bg-loading-card">'+
+        '<div class="eleve-bg-spinner"></div>'+
+        '<div class="eleve-bg-loading-title">Removendo fundo...</div>'+
+        '<p class="eleve-bg-loading-text">Aguarde enquanto o Eleve Designer processa a imagem.</p>'+
+        '<div class="eleve-bg-progress"></div>'+
+        '<div class="eleve-bg-loading-hint">Não feche esta tela até concluir.</div>'+
+      '</div>';
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function collectButtons(){
+    var selectors = [
+      '#removeBgImageBtn',
+      'button[onclick*="removeBackgroundFromSelectedImage"]',
+      'button[onclick*="mobileRemoveBackgroundV95"]',
+      'button[onclick*="removeSelectedBackground"]'
+    ];
+    var list = [];
+    selectors.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(btn){
+        if(list.indexOf(btn) === -1) list.push(btn);
+      });
+    });
+    return list;
+  }
+
+  window.eleveShowRemoveBgLoading = function(){
+    activeCount++;
+    ensureOverlay().classList.add('show');
+    activeButtons = collectButtons();
+    activeButtons.forEach(function(btn){
+      if(!originalText.has(btn)) originalText.set(btn, btn.textContent);
+      btn.classList.add('eleve-processing','processing');
+      if(btn.id === 'removeBgImageBtn') btn.textContent = 'Removendo...';
+    });
+  };
+
+  window.eleveHideRemoveBgLoading = function(){
+    activeCount = Math.max(0, activeCount - 1);
+    if(activeCount > 0) return;
+    var overlay = document.getElementById('eleveBgLoadingOverlay');
+    if(overlay) overlay.classList.remove('show');
+    activeButtons.forEach(function(btn){
+      btn.classList.remove('eleve-processing','processing');
+      if(originalText.has(btn)) btn.textContent = originalText.get(btn);
+    });
+    activeButtons = [];
+  };
+
+  function wrapRemoveFunction(name){
+    var fn = window[name];
+    if(typeof fn !== 'function' || fn.__eleveLoaderWrapped) return false;
+    var wrapped = async function(){
+      window.eleveShowRemoveBgLoading();
+      try{
+        return await Promise.resolve(fn.apply(this, arguments));
+      }finally{
+        window.eleveHideRemoveBgLoading();
+      }
+    };
+    wrapped.__eleveLoaderWrapped = true;
+    window[name] = wrapped;
+    return true;
+  }
+
+  ready(function(){
+    ensureOverlay();
+    wrapRemoveFunction('removeBackgroundFromSelectedImage');
+    wrapRemoveFunction('mobileRemoveBackgroundV95');
+
+    // Caso algum botão antigo chame outra função de remoção de fundo de imagem.
+    var attempts = 0;
+    var timer = setInterval(function(){
+      attempts++;
+      var ok1 = wrapRemoveFunction('removeBackgroundFromSelectedImage');
+      var ok2 = wrapRemoveFunction('mobileRemoveBackgroundV95');
+      if(attempts > 20 || ok1 || ok2) clearInterval(timer);
+    }, 250);
+  });
+})();
+</script>
+
+
+
+<!-- V86: correção mínima e segura - mantém a base aprovada e remove apenas JPEG duplicado no topo -->
+<script id="v86-jpeg-unico-seguro">
+(function(){
+  function normalizarTexto(el){
+    return (el && (el.textContent || '') || '').replace(/\s+/g,' ').trim().toLowerCase();
+  }
+  function ehBotaoJpeg(btn){
+    var txt = normalizarTexto(btn);
+    var id = (btn.id || '').toLowerCase();
+    var html = (btn.innerHTML || '').toLowerCase();
+    return id === 'exportjpgbtnv72' || txt === 'exportar jpeg' || txt === 'jpeg' || txt === 'jpg jpeg' || html.indexOf('<strong>jpg</strong>jpeg') !== -1;
+  }
+  function manterApenasUmJpeg(){
+    var actions = document.querySelector('.top-actions');
+    if(actions){
+      var desktopBtns = Array.from(actions.querySelectorAll('button')).filter(ehBotaoJpeg);
+      var keepDesktop = desktopBtns.find(function(btn){ return btn.id === 'exportJpgBtnV72'; }) || desktopBtns[0];
+      desktopBtns.forEach(function(btn){
+        if(btn !== keepDesktop) btn.remove();
+      });
+      if(keepDesktop){
+        keepDesktop.id = 'exportJpgBtnV72';
+        keepDesktop.classList.add('btn','secondary','export-format-btn');
+        keepDesktop.type = 'button';
+        keepDesktop.textContent = 'Exportar JPEG';
+        keepDesktop.onclick = function(){ if(typeof window.downloadArt === 'function') window.downloadArt('jpg'); };
+        keepDesktop.style.display = '';
+      }
+    }
+
+    var mobileBar = document.getElementById('mobileCanvaTools');
+    if(mobileBar){
+      var mobileJpegs = Array.from(mobileBar.querySelectorAll('button')).filter(ehBotaoJpeg);
+      var keepMobile = mobileJpegs.find(function(btn){ return btn.id === 'mobileExportJpgV72'; }) || mobileJpegs[0];
+      mobileJpegs.forEach(function(btn){
+        if(btn !== keepMobile) btn.remove();
+      });
+      if(keepMobile){
+        keepMobile.id = 'mobileExportJpgV72';
+        keepMobile.classList.add('export-format-btn');
+        keepMobile.innerHTML = '<strong>JPG</strong>JPEG';
+        keepMobile.onclick = function(){
+          if(typeof window.mobileCallEleve === 'function') window.mobileCallEleve('downloadArt','jpg');
+          else if(typeof window.downloadArt === 'function') window.downloadArt('jpg');
+        };
+        keepMobile.style.display = '';
+      }
+    }
+  }
+  function agendar(){
+    manterApenasUmJpeg();
+    setTimeout(manterApenasUmJpeg, 300);
+    setTimeout(manterApenasUmJpeg, 1000);
+    setTimeout(manterApenasUmJpeg, 2200);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', agendar);
+  else agendar();
+})();
+</script>
+
+
+<!-- V101: adiciona Post/Story na versão móvel sem alterar a estrutura aprovada -->
+<style id="v101-mobile-post-story-style">
+@media(max-width:900px){
+  #mobileCanvaTools .mobile-format-toggle-v101{
+    display:flex!important;
+    gap:6px!important;
+    align-items:stretch!important;
+    justify-content:center!important;
+    min-width:124px!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101{
+    min-width:58px!important;
+    height:auto!important;
+    border:1px solid rgba(56,224,32,.35)!important;
+    background:#071007!important;
+    color:#38e020!important;
+    border-radius:12px!important;
+    padding:7px 8px!important;
+    font-size:10px!important;
+    line-height:1.05!important;
+    font-weight:950!important;
+    cursor:pointer!important;
+    box-shadow:0 8px 18px rgba(0,0,0,.22)!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101 strong{
+    display:block!important;
+    font-size:13px!important;
+    line-height:1!important;
+    margin-bottom:3px!important;
+    color:inherit!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101.active{
+    background:#38e020!important;
+    color:#031003!important;
+    border-color:#38e020!important;
+  }
+  body:not(.eleve-theme) #mobileCanvaTools .mobile-format-btn-v101{
+    background:#fff!important;
+    color:#1467ff!important;
+    border-color:#1467ff!important;
+  }
+  body:not(.eleve-theme) #mobileCanvaTools .mobile-format-btn-v101.active{
+    background:#1467ff!important;
+    color:#fff!important;
+  }
+}
+@media(min-width:901px){
+  #mobileFormatToggleV101{display:none!important;}
+}
+</style>
+<script id="v101-mobile-post-story-js">
+(function(){
+  function getCurrentFormatV101(){
+    if(typeof window.currentFormat !== 'undefined') return window.currentFormat;
+    var art = document.getElementById('art');
+    return art && art.classList.contains('format-story') ? 'story' : 'post';
+  }
+
+  function updateMobileFormatButtonsV101(){
+    var current = getCurrentFormatV101();
+    var post = document.getElementById('mobileFormatPostV101');
+    var story = document.getElementById('mobileFormatStoryV101');
+    if(post) post.classList.toggle('active', current === 'post');
+    if(story) story.classList.toggle('active', current === 'story');
+  }
+
+  function applyMobileFormatV101(format){
+    if(typeof window.setArtFormat === 'function'){
+      window.setArtFormat(format);
+    }
+    updateMobileFormatButtonsV101();
+    setTimeout(function(){
+      if(typeof window.forceFitToScreen === 'function') window.forceFitToScreen();
+      if(typeof window.centerMobileArtboardV100 === 'function') window.centerMobileArtboardV100();
+      updateMobileFormatButtonsV101();
+    },80);
+  }
+
+  function addMobileFormatButtonsV101(){
+    var bar = document.getElementById('mobileCanvaTools');
+    if(!bar || document.getElementById('mobileFormatToggleV101')) return;
+
+    var wrap = document.createElement('div');
+    wrap.id = 'mobileFormatToggleV101';
+    wrap.className = 'mobile-format-toggle-v101';
+    wrap.innerHTML = ''+
+      '<button type="button" class="mobile-format-btn-v101" id="mobileFormatPostV101"><strong>Post</strong>1080×1350</button>'+
+      '<button type="button" class="mobile-format-btn-v101" id="mobileFormatStoryV101"><strong>Story</strong>1080×1920</button>';
+
+    var baixar = Array.from(bar.querySelectorAll('button')).find(function(btn){
+      return (btn.textContent || '').toLowerCase().includes('baixar') || (btn.textContent || '').toLowerCase().includes('png') || btn.id === 'mobileExportJpgV72';
+    });
+    if(baixar) bar.insertBefore(wrap, baixar);
+    else bar.appendChild(wrap);
+
+    document.getElementById('mobileFormatPostV101').onclick = function(){ applyMobileFormatV101('post'); };
+    document.getElementById('mobileFormatStoryV101').onclick = function(){ applyMobileFormatV101('story'); };
+    updateMobileFormatButtonsV101();
+  }
+
+  function readyV101(){
+    addMobileFormatButtonsV101();
+    updateMobileFormatButtonsV101();
+    setTimeout(addMobileFormatButtonsV101,300);
+    setTimeout(addMobileFormatButtonsV101,1000);
+    setTimeout(updateMobileFormatButtonsV101,1200);
+  }
+
+  var oldUpdate = window.updateFormatButtons;
+  if(typeof oldUpdate === 'function'){
+    window.updateFormatButtons = function(){
+      var result = oldUpdate.apply(this, arguments);
+      updateMobileFormatButtonsV101();
+      return result;
+    };
+  }
+
+  window.addMobileFormatButtonsV101 = addMobileFormatButtonsV101;
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', readyV101);
+  else readyV101();
+  window.addEventListener('resize', updateMobileFormatButtonsV101);
+  window.addEventListener('orientationchange', function(){setTimeout(updateMobileFormatButtonsV101,250);});
+})();
+</script>
+
+
+<!-- V102: ajuste visual mobile para impedir textos vazando dos botões Post/Story -->
+<style id="v102-mobile-post-story-text-fit">
+@media(max-width:900px){
+  #mobileCanvaTools .mobile-format-toggle-v101{
+    min-width:118px!important;
+    gap:5px!important;
+    overflow:hidden!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101{
+    box-sizing:border-box!important;
+    min-width:56px!important;
+    width:56px!important;
+    max-width:56px!important;
+    height:56px!important;
+    padding:6px 3px!important;
+    overflow:hidden!important;
+    text-align:center!important;
+    white-space:normal!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:2px!important;
+    font-size:7.4px!important;
+    line-height:1!important;
+    letter-spacing:-.04em!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101 strong{
+    font-size:11px!important;
+    line-height:1!important;
+    margin:0!important;
+    letter-spacing:0!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+  }
+  #mobileCanvaTools .mobile-format-btn-v101 span{
+    display:block!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    font-size:7.4px!important;
+    line-height:1!important;
+    letter-spacing:-.05em!important;
+  }
+}
+</style>
+<script id="v102-mobile-post-story-text-fit-js">
+(function(){
+  function ajustarTextoBotoesFormatoMobileV102(){
+    var post = document.getElementById('mobileFormatPostV101');
+    var story = document.getElementById('mobileFormatStoryV101');
+    if(post && !post.querySelector('span')) post.innerHTML = '<strong>Post</strong><span>1080×1350</span>';
+    if(story && !story.querySelector('span')) story.innerHTML = '<strong>Story</strong><span>1080×1920</span>';
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ajustarTextoBotoesFormatoMobileV102);
+  else ajustarTextoBotoesFormatoMobileV102();
+  setTimeout(ajustarTextoBotoesFormatoMobileV102,300);
+  setTimeout(ajustarTextoBotoesFormatoMobileV102,1000);
+  window.addEventListener('resize', ajustarTextoBotoesFormatoMobileV102);
+  window.addEventListener('orientationchange', function(){setTimeout(ajustarTextoBotoesFormatoMobileV102,250);});
+})();
+</script>
+
+
+<!-- V71: Templates movido para abaixo de Informações no painel, sem alterar funções. -->
 </body>
 </html>
