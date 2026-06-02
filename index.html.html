@@ -6588,5 +6588,112 @@ window.ELEVE_API_URL = "https://script.google.com/macros/s/AKfycbzRh-Jw7PbN8ZCWM
 })();
 </script>
 
+
+<!-- V103: Correção definitiva para preservar espaços entre palavras nos textos do painel -->
+<script id="v103-preservar-espacos-textos-painel">
+(function(){
+  const ELEVE_TEXT_FIELDS = ['badge','title','subtitle','price','phone','address'];
+
+  function normalText(v){
+    return String(v == null ? '' : v).replace(/\u00A0/g, ' ');
+  }
+
+  function visualText(v){
+    return normalText(v).replace(/ /g, '\u00A0');
+  }
+
+  function findTextNodeFromItem(item){
+    if(!item) return null;
+    try{
+      if(typeof getEditableTextNode === 'function'){
+        const node = getEditableTextNode(item);
+        if(node) return node;
+      }
+    }catch(err){}
+
+    const direct = Array.from(item.childNodes || []).find(n => n.nodeType === 3 && String(n.textContent || '').trim());
+    if(direct) return item;
+
+    return item.querySelector && item.querySelector('span,div,p,strong,b,small');
+  }
+
+  function applyFieldToArt(field, value, shouldSelect){
+    const active = (typeof getActive === 'function') ? getActive() : null;
+    const target = (active && (active.dataset.base === field || active.dataset.id === field))
+      ? active
+      : document.querySelector('.item[data-id="'+field+'"]');
+
+    const node = findTextNodeFromItem(target);
+    if(node){
+      node.textContent = visualText(value);
+      node.innerText = visualText(value);
+    }
+
+    if(target && shouldSelect !== false && typeof select === 'function'){
+      select(target);
+    }
+  }
+
+  function syncOneField(field){
+    const input = document.getElementById(field + 'Input');
+    if(!input) return;
+    input.value = normalText(input.value);
+    applyFieldToArt(field, input.value, false);
+  }
+
+  window.editByField = function(field, value){
+    applyFieldToArt(field, value, true);
+  };
+
+  window.updateText = function(){
+    ELEVE_TEXT_FIELDS.forEach(syncOneField);
+  };
+
+  window.syncLeftPanelWithSelected = function(el){
+    const base = el && (el.dataset.base || el.dataset.id);
+    if(!base || !ELEVE_TEXT_FIELDS.includes(base)) return;
+
+    const node = findTextNodeFromItem(el);
+    const input = document.getElementById(base + 'Input');
+
+    if(node && input){
+      input.value = normalText(node.innerText || node.textContent || '');
+    }
+  };
+
+  function bindSpaceSafeInputs(){
+    ELEVE_TEXT_FIELDS.forEach(function(field){
+      const input = document.getElementById(field + 'Input');
+      if(!input || input.dataset.v103SpaceSafe === '1') return;
+
+      input.dataset.v103SpaceSafe = '1';
+
+      input.addEventListener('input', function(){
+        const pos = input.selectionStart;
+        input.value = normalText(input.value);
+        if(typeof pos === 'number'){
+          try{ input.setSelectionRange(pos, pos); }catch(err){}
+        }
+        applyFieldToArt(field, input.value, true);
+      }, true);
+
+      input.addEventListener('change', function(){
+        input.value = normalText(input.value);
+        applyFieldToArt(field, input.value, true);
+      }, true);
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindSpaceSafeInputs);
+  }else{
+    bindSpaceSafeInputs();
+  }
+
+  setTimeout(bindSpaceSafeInputs, 300);
+  setTimeout(bindSpaceSafeInputs, 1000);
+})();
+</script>
+
 </body>
 </html>
